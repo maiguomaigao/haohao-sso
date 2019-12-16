@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.haohao.sso.dao.mapper.SysAppMapper">
+    
+    <resultMap type="SysApp" id="SysAppResult">
+        <result property="id"           column="id" />
+        <result property="appName"      column="app_name" />
+        <result property="url"          column="url" />
+        <result property="ip"           column="ip" />
+        <result property="appKey"       column="app_key" />
+        <result property="appSecret"    column="app_secret" />
+        <result property="indexPath"    column="index_path" />
+        <result property="callbackPath"  column="callback_path" />
+        <result property="locked"       column="locked" />
+        <result property="gmtCreate"    column="gmt_create" />
+        <result property="gmtUpdate"    column="gmt_update" />
+    </resultMap>
+
+    <sql id="selectSysAppVo">
+        select id, app_name, url, ip, app_key, app_secret, index_path, callback_path, locked, gmt_create, gmt_update from sys_app
+    </sql>
+
+    <select id="selectSysAppList" parameterType="SysApp" resultMap="SysAppResult">
+        <include refid="selectSysAppVo"/>
+        <where>  
+            <if test="appName != null  and appName != ''"> and app_name = #{appName}</if>
+            <if test="appKey != null  and appKey != ''"> and app_key = #{appKey}</if>
+        </where>
+    </select>
+    
+    <select id="selectById" parameterType="Long" resultMap="SysAppResult">
+        <include refid="selectSysAppVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectByAppName" parameterType="String" resultMap="SysAppResult">
+        <include refid="selectSysAppVo"/>
+        where app_name = #{appName}
+    </select>
+
+    <select id="selectByAppKey" parameterType="String" resultMap="SysAppResult">
+        <include refid="selectSysAppVo"/>
+        where app_key = #{appKey}
+    </select>
+        
+    <insert id="insertSysApp" parameterType="SysApp" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_app
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appName != null  and appName != ''">app_name,</if>
+            <if test="url != null  and url != ''">url,</if>
+            <if test="ip != null  and ip != ''">ip,</if>
+            <if test="appKey != null  and appKey != ''">app_key,</if>
+            <if test="appSecret != null  and appSecret != ''">app_secret,</if>
+            <if test="indexPath != null and indexPath != ''">index_path</if>
+            <if test="callbackPath != null and callbackPath != ''">callback_path</if>
+            <if test="locked != null ">locked,</if>
+            <if test="gmtCreate != null ">gmt_create,</if>
+            <if test="gmtUpdate != null ">gmt_update,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appName != null  and appName != ''">#{appName},</if>
+            <if test="url != null  and url != ''">#{url},</if>
+            <if test="ip != null  and ip != ''">#{ip},</if>
+            <if test="appKey != null  and appKey != ''">#{appKey},</if>
+            <if test="appSecret != null  and appSecret != ''">#{appSecret},</if>
+            <if test="indexPath != null and indexPath != ''">#{indexPath},</if>
+            <if test="callbackPath != null and callbackPath != ''">#{callbackPath},</if>
+            <if test="locked != null ">#{locked},</if>
+            <if test="gmtCreate != null ">#{gmtCreate},</if>
+            <if test="gmtUpdate != null ">#{gmtUpdate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysApp" parameterType="SysApp">
+        update sys_app
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appName != null  and appName != ''">app_name = #{appName},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="ip != null  and ip != ''">ip = #{ip},</if>
+            <if test="appKey != null  and appKey != ''">app_key = #{appKey},</if>
+            <if test="appSecret != null  and appSecret != ''">app_secret = #{appSecret},</if>
+            <if test="indexPath != null and indexPath != ''">index_path = #{indexPath},</if>
+            <if test="callbackPath != null and callbackPath != ''">callback_path = #{callbackPath},</if>
+            <if test="locked != null ">locked = #{locked},</if>
+            <if test="gmtCreate != null ">gmt_create = #{gmtCreate},</if>
+            <if test="gmtUpdate != null ">gmt_update = #{gmtUpdate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysAppById" parameterType="Long">
+        delete from sys_app where id = #{id}
+    </delete>
+
+    <delete id="deleteSysAppByIds" parameterType="String">
+        delete from sys_app where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,24 @@
+<Configuration status="INFO" monitorInterval="30">
+    <properties>
+        <property name="LogHome">/data/logs/haohao</property>
+        <property name="LogName">haohao-sso</property>
+    </properties>
+
+    <Appenders>
+        <RollingRandomAccessFile name="RollingRandomAccessFile"
+                                 fileName="${LogHome}/${LogName}.log"
+                                 filePattern="${LogHome}/$${date:yyyy-MM}/${LogName}-%d{yyyy-MM-dd HH-mm}-%i.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="RollingRandomAccessFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

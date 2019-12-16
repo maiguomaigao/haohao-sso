@@ -1,0 +1,32 @@
+### web server
+server:
+  port: 8381
+
+### spring
+#  spring.mvc.static-path-pattern=/static/**
+#  spring.resources.static-locations=classpath:/static/
+spring:
+  application:
+    name: sample-web1
+  mvc:
+    servlet:
+      path: /
+      load-on-startup: 1
+    locale: zh_CN
+    static-path-pattern: /static/**
+    favicon:
+      enabled: true
+  # 模板引擎
+  freemarker:
+    template-loader-path: ["classpath:/view/"] # 设置ftl文件路径
+    suffix: .ftl                            # 设置模板后缀名
+    charset: UTF-8                          # 设置页面编码格式
+    request-context-attribute: request      #可以让Freemarker获取项目根路经
+    cache: false                            # 设置页面缓存
+#    check-template-location: true
+#    expose-request-attributes: false
+#    expose-session-attributes: false
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss

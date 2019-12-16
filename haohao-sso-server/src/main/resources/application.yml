@@ -1,0 +1,79 @@
+### web server
+server:
+  port: 8380
+
+### spring
+spring:
+  application:
+    name: haohao-sso
+  mvc:
+    servlet:
+      path: /
+      load-on-startup: 1
+    locale: zh_CN
+    static-path-pattern: /static/**
+    favicon:
+      enabled: true
+  messages:
+    basename: messages         # 国际化资源文件路径
+  # 模板引擎
+  freemarker:
+    template-loader-path: ["classpath:/view/"] # 设置ftl文件路径
+    suffix: .ftl                            # 设置模板后缀名
+    charset: UTF-8                          # 设置页面编码格式
+    request-context-attribute: request      #可以让Freemarker获取项目根路经
+    cache: false                            # 设置页面缓存
+#    check-template-location: true
+#    expose-request-attributes: false
+#    expose-session-attributes: false
+  # 数据源配置
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver   #8.0.18:com.mysql.cj.jdbc.Driver
+      url: ${datasource.url}
+      username: ${datasource.username}
+      password: ${datasource.password}
+      initialSize: 5                        # 初始连接数
+      minIdle: 10                           # 最小连接池数量
+      maxActive: 20                         # 最大连接池数量
+      maxWait: 60000                        # 配置获取连接等待超时的时间
+      timeBetweenEvictionRunsMillis: 60000  # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      minEvictableIdleTimeMillis: 300000    # 配置一个连接在池中最小生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000    # 配置一个连接在池中最大生存的时间，单位是毫秒
+      validationQuery: SELECT 1 FROM DUAL   # 配置检测连接是否有效
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true # 慢SQL记录
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+      db-type: mysql
+      web-stat-filter:
+        session-stat-enable: true
+        enabled: true
+
+
+### MyBatis
+mybatis:
+  config-location: classpath:mybatis.xml            # 加载全局的配置文件
+  mapper-locations: classpath:mapper/*Mapper.xml    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  type-aliases-package: xyz.haohao.sso        # 搜索指定包别名
+
+
+### 防止XSS攻击
+xss:
+  enabled: true                                               # 过滤开关
+  excludes: /system/notice/*                                  # 排除链接（多个用逗号分隔）
+  urlPatterns: /system/*,/monitor/*,/tool/*                   # 匹配链接
+
+
+# 登录认证类型，JDBC/LDAP,不配置则为JDBC，走本地数据库
+#sso:
+#  authentication:
+#    type: LDAP
