@@ -16,7 +16,7 @@
         <dependency>                                    <!-- jdbc连接器 -->
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.47</version>                   <!-- 8.0.18: MySQL Server version:5.6, 5.7, 8.0 -->
+            <version>8.0.16</version>                   <!-- 8.0.18: MySQL Server version:5.6, 5.7, 8.0 -->
         </dependency>
         <dependency>                                    <!-- 数据库连接池 -->
             <groupId>com.alibaba</groupId>
