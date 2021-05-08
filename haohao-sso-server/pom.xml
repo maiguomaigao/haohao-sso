@@ -94,7 +94,7 @@
         <dependency>                        <!-- 使用了shiro的crypto部分类 -->
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>1.4.1</version>
+            <version>1.6.0</version>
         </dependency>
 
         <dependency>                        <!-- swagger2 -->
